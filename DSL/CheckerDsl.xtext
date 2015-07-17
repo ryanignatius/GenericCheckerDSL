@@ -1,0 +1,243 @@
+grammar org.xtext.example.checkerdsl.CheckerDsl with org.eclipse.xtext.xbase.Xbase
+
+generate checkerDsl "http://www.xtext.org/example/checkerdsl/CheckerDsl"
+
+Dsl:
+	elements=ClassDeclaration;
+
+ClassDeclaration:
+	'class' name=ValidID '{' features+=Feature* '}';
+
+Feature:
+	CompileAndRun | ChkVariableDeclaration | Format | MR | Predicate | Checker;
+
+CompileAndRun:
+	'language' ':' lang=CHK_LANGUAGE_REFERENCE
+	'source' 'location' ':' sourceLocation=STRING
+	'input' 'location' ':' inputLocation=STRING;
+
+ChkVariableDeclaration:
+	type=CHK_TYPE_REFERENCE (arr+='[' (sz+=CHK_NUMBER)? ']')* name=ValidID
+	('=' vv=(ChkVariables | ChkOperation | HelperFunctionStatement))?;
+
+Format:
+	'format' ':' (DataFormat | SourceFormat);
+
+MR:
+	mr='MR' num=INT '{'
+  	((mrExp+=(ChkBoolExpression | ChkStatement | ChkLoopStatement))
+  		(';' mrExp+=(ChkBoolExpression | ChkStatement | ChkLoopStatement))*)?
+  	followup=FollowUp
+  	property=Property
+  	'}';
+
+Predicate:
+	p='P' num=INT '{'
+	((predicateExp+=(ChkBoolExpression | ChkBoolFunction | ChkLoopBoolExpression))
+		(';' predicateExp+=(ChkBoolExpression | ChkBoolFunction | ChkLoopBoolExpression))*)?
+	'}';
+
+Checker:
+	'check' ':' type=CHK_FILE_TYPE '{' (predicate+=PredicateUsage(';' predicate+=PredicateUsage)*)? '}';
+
+PredicateUsage:
+	p='P' '[' predicateNumber+=INT (',' predicateNumber+=INT)* ']'
+	'check' checkScope=CHK_CHECK_SCOPE
+	'[' fileType+=STRING (',' fileType+=STRING)* ']'
+	'score'
+	(minusSign='-')? score=INT;
+
+//----Variable
+ChkVariable:
+	(pref=CHK_PREFIX)? (var=ValidID) ((newtest='`')?) ('[' v+=CHK_NUMBER ']')*;
+
+ChkVariables:
+	va=ChkVariable | nu=CHK_INT;
+
+//----MR
+FollowUp:
+	fol='followup' '{'
+		((followups+=(ChkStatement | ChkLoopStatement))
+			(';' followups+=(ChkStatement | ChkLoopStatement))*)?
+	'}';
+
+Property:
+	prop='check' '{'
+		((properties+=(ChkBoolExpression | ChkLoopBoolExpression))
+			(';' properties+=(ChkBoolExpression | ChkLoopBoolExpression))*)?
+	'}';
+
+ChkStatement:
+	ChkVariables | ChkAssignment | ChkOperation | HelperFunctionStatement;
+
+ChkBoolExpression:
+	(negate='not')? (h1=HelperFunctionBool | v1=ChkStatement opr=CHK_OP_RELASIONAL v2=ChkStatement);
+
+ChkLoop:
+	'for' '(' (index=ChkVariable) ',' (startIndex=ChkVariables) ',' (maxIndex=ChkVariables) ')';
+
+ChkLoopStatement:
+	for=ChkLoop
+		'{' ((ex+=(ChkLoopVar | ChkStatement)) (';' ex+=(ChkLoopVar | ChkStatement))*)? '}'
+	;
+
+ChkLoopBoolExpression:
+	for=ChkLoop
+		'{' ((ex+=(ChkLoopVar | ChkBoolExpression)) (';' ex+=(ChkLoopVar | ChkBoolExpression))*)? '}'
+	;
+
+ChkBoolFunction:
+	type=CHK_CHECK_TYPE (regex='regex')? str=STRING;
+
+ChkAssignment:
+	(def?='def')? v1=ChkVariable '=' v2=(ChkVariables | ChkOperation | HelperFunctionStatement);
+
+ChkLoopVar:
+	'def' tp=ChkVariableDeclaration;
+
+ChkOperation:
+	operand+=ChkVariables operator+=CHK_OPERATOR operand+=ChkVariables;
+
+HelperFunctionStatement:
+	(sum='sum' '(' var=ChkVariable ')' |
+		abs='abs'  '(' var=ChkVariable ')' |
+		max='max'  '(' var=ChkVariable ')' |
+		min='min'  '(' var=ChkVariable ')' |
+		swap='swap'  '(' var=ChkVariable ',' var1=ValidID ',' var2=ValidID ')' |
+		select='select' '(' vars+=ValidID (',' vars+=ValidID)* ')' |
+		add='add' '(' var=ChkVariable ',' var3=ChkVariables ')' |
+		remove='remove' '(' var=ChkVariable (',' var3=ChkVariables)? ')' |
+		random='random' '(' ((var3=ChkVariables) '..' (var4=ChkVariables))? ')' |
+		size='size' '(' (var=ChkVariable) ')' |
+		reverse='reverse' '(' (var=ChkVariable) ')' |
+		
+		addRow='addRow' '(' var=ChkVariable ')' |
+		addCol='addColumn' '(' var=ChkVariable ')' |
+		swapRow='swapRow' '(' var=ChkVariable ',' var1=ValidID ',' var2=ValidID ')' |
+		swapCol='swapColumn' '(' var=ChkVariable ',' var1=ValidID ',' var2=ValidID ')' |
+		removeRow='removeRow' '(' var=ChkVariable ',' var3=ChkVariables ')' |
+		removeCol='removeColumn' '(' var=ChkVariable ',' var3=ChkVariables ')' |
+		
+		permute='permute' '(' var=ChkVariable ')' |
+		plus='plus' '(' var=ChkVariable ',' var3=ChkVariables ')' |
+		multiply='multiply' '(' var=ChkVariable ',' var3=ChkVariables ')' |
+		invert='invert' '(' var=ChkVariable ')' |
+		include='include' '(' var=ChkVariable ',' var3=ChkVariables ')' |
+		exclude='exclude' '(' var=ChkVariable ',' var3=ChkVariables ')' |
+		compositional='compositional' '(' var=ChkVariable ')'
+	);
+
+HelperFunctionBool:
+	(prime='prime' '(' var3=ChkVariables ')' |
+		contains='contain' '(' var=ChkVariable ',' var3=ChkVariables ')'
+	);
+
+ForFormatExpression:
+	('for' '(' (index=ChkVariable) ',' (startIndex=ChkVariables) ',' (maxIndex=ChkVariables) ')'
+		'{' (ex+=FormatExpression)* '}'
+	);
+
+DataFormat :
+	inp=InputFormat | oup=OutputFormat;
+
+InputFormat:
+	input = 'input' '{' exp+=(FormatExpression | ForFormatExpression)* '}';
+
+OutputFormat:
+	output = 'output' '{' exp+=(FormatExpression | ForFormatExpression)* '}';
+
+SourceFormat:
+	src = 'source' '{'
+	functionBlock='function' 'block' ':' openFunction+=STRING closeFunction+=STRING ('or' openFunction+=STRING closeFunction+=STRING)*
+	singleLineComment='single' 'comment' ':' singleComment+=STRING ('or' singleComment+=STRING)*
+	multiLineComment='multi' 'comment' ':' openMultiComment+=STRING closeMultiComment+=STRING ('or' openMultiComment+=STRING closeMultiComment+=STRING)*
+	'}';
+
+FormatExpression:
+	num = CHK_NUMBER '(' (var+=ValidID ('[' sz+=CHK_NUMBER ']')* ('<' (count+=CHK_NUMBER) '>')?
+		(',' var+=ValidID ('[' sz+=CHK_NUMBER ']')* ('<' (count+=CHK_NUMBER) '>')?)*)? ')';
+
+//----terminal
+CHK_OPERATOR:
+	'+' | '-' | '*' | '/' | 'div' | '%' | '|' | '&' | '^';
+
+CHK_OP_RELASIONAL:
+	'==' | '!=' | '>=' | '<=' | '>' | '<' ;
+
+CHK_PREFIX:
+	('in' | 'out' | 'exp') '.';
+
+CHK_INT:
+	'-'? INT ('.' INT)?;
+
+CHK_NUMBER:
+	CHK_INT | ValidID;
+
+CHK_TYPE_REFERENCE:
+	'int' | 'long' | 'float' | 'double' | 'boolean' | 'char' | 'string' | 'tree' | 'adjMat' | 'adjList';
+
+CHK_LANGUAGE_REFERENCE:
+	'C' | 'C++' | 'Java' | 'Pascal';
+
+CHK_CHECK_SCOPE:
+	'all' | 'each';
+
+CHK_CHECK_TYPE:
+	'exist' | 'forbid';
+
+CHK_FILE_TYPE:
+	'input' | 'output' | 'source';
+
+/*
+Dsl:
+	(elements+=CheckerElement)*;
+
+CheckerElement:
+	FunctionDeclaration | CommentDeclaration | FilterDeclaration | CheckerDeclaration;
+
+FunctionDeclaration:
+	function='function' type=(FunctionOpening | FunctionClosing);
+
+FunctionOpening:
+	(open='open') pattern=STRING;
+
+FunctionClosing:
+	(close='close') pattern=STRING;
+
+CommentDeclaration:
+	SingleLineComment | MultiLineComment;
+
+SingleLineComment:
+	single='single' pattern=STRING;
+
+MultiLineComment:
+	multi='multi' type=(MultiLineOpening | MultiLineClosing);
+
+MultiLineOpening:
+	(open='open') pattern=STRING;
+
+MultiLineClosing:
+	(close='close') pattern=STRING;
+
+FilterDeclaration:
+	filter='filter' type=(DirectoryFilter | FileFilter);
+
+DirectoryFilter:
+	dir='directory' '(' patterns+=STRING (',' patterns+=STRING)* ')';
+
+FileFilter:
+	file='file' '(' patterns+=STRING (',' patterns+=STRING)* ')';
+
+CheckerDeclaration:
+	check='check' '(' types+=('require' | 'forbid') patterns+=CheckerPattern 'score' ':' scores+=INT
+	(',' types+=('require' | 'forbid') patterns+=CheckerPattern 'score' ':' scores+=INT)* ')'
+	(in='in' filter=FileFilter)?;
+
+CheckerPattern:
+	str=STRING | help=Helper;
+
+Helper:
+	type=('recursive' | 'constructor' | 'param_constructor' | 'destructor' | 'copy_constructor' | 'operator=')
+	(returntype=JvmTypeReference)? name=ValidID
+	('(' paramtypes+=JvmTypeReference params+=ValidID (',' paramtypes+=JvmTypeReference params+=ValidID)* ')')?;
+*/

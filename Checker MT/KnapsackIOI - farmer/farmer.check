@@ -1,0 +1,155 @@
+// Specification for IOI 2004 task day 2 : Farmer
+class Farmer {
+	/*
+	 * variable declaration
+	 */
+	
+	// variable for input
+	int q (subtask 1 : 0..150000) // q is number of cypress trees
+	int m (subtask 1 : 0..2000) // m is number of fields
+	int s (subtask 1 : 0..2000) // s is number of strips
+	int[m] n (subtask 1 : 3..150) // n is number of each cypress tree in fields
+	int[s] r (subtask 1 : 2..150) // r is number of each cypress tree in strips
+	
+	// variable for output
+	int olive (0..q) // olive is largest possible number of olive trees the son may inherit
+	
+	// hidden variable (for mr only)
+	int[m] yn (0..1) // yn is variable contain 1 if this tree is selected, 0 otherwise
+	int[s] yr (0..1) // yr is variable contain 1 if this tree is selected, 0 otherwise
+	
+	score {
+		(1 : 100)
+	}
+	
+	/*
+	 * input format
+	 */
+	input {
+		1 (q,m,s)
+		1 (n<m>)
+		1 (r<s>)
+	}
+	
+	/*
+	 * output format
+	 */
+	output {
+		1 (olive)
+	}
+	
+	hidden {
+		1 (yn<m>)
+		1 (yr<s>)
+	}
+	
+	MR 1 {
+		(select(k,l) where 1<=k and k<l and l<=m and n[k]!=n[l])
+		followup {
+			(n` = swap(n,k,l))
+			(yn` = swap(yn,k,l))
+		}
+		check {
+			
+		}
+		
+	}
+	
+	MR 2 {
+		(select(k,l) where 1<=k and k<l and l<=s and r[k]!=r[l])
+		followup {
+			(r` = swap(r,k,l))
+			(yr` = swap(yr,k,l))
+		}
+		check {
+			
+		}
+		
+	}
+	
+	MR 3 {
+		(def nnew = min(n) where yn[i] == 0)
+		followup {
+			(m` = m+1)
+			(n` = add(n,nnew))
+			(yn` = add(yn,0))
+		}
+		check {
+			
+		}
+	}
+	
+	MR 4 {
+		(def rnew = min(r) where yr[i] == 0)
+		followup {
+			(s` = s+1)
+			(r` = add(r,rnew))
+			(yr` = add(yr,0))
+		}
+		check {
+			
+		}
+	}
+	
+	MR 5 {
+		(select(k) where yn[k]==0)
+		followup {
+			(m` = m-1)
+			(n` = remove(n,k))
+			(yn` = remove(yn,k))
+		}
+		check {
+			
+		}
+	}
+	
+	MR 6 {
+		(select(k) where yr[k]==0)
+		followup {
+			(s` = s-1)
+			(r` = remove(r,k))
+			(yr` = remove(yr,k))
+		}
+		check {
+			
+		}
+	}
+	
+	MR 7 {
+		(select(k) where yn[k]==1)
+		followup {
+			(m` = m-1)
+			(q` = q-n[k])
+			(n` = remove(n,k))
+			(yn` = remove(yn,k))
+		}
+		check {
+			(olive` = olive-n[k])
+		}
+	}
+	
+	MR 8 {
+		(select(k,l) where 1<=k and k<l and l<=m and yn[k]==1 and yn[l]==1)
+		followup {
+			(n`[k] = n[k]+n[l])
+			(m` = m-1)
+			(n` = remove(n,l))
+			(yn` = remove(yn,l))
+		}
+		check {
+			
+		}
+	}
+	
+	MR 9 {
+		(select(k) where yn[k]==1)
+		(def cc = random(0..100))
+		followup {
+			(q` = q+cc)
+			(n`[k] = n[k]+cc)
+		}
+		check {
+			(olive` = olive+cc)
+		}
+	}
+}

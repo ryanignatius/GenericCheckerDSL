@@ -1,0 +1,19 @@
+// Soal nomor 2
+// Nama file : Point.h, Point.cpp, Main.cpp
+// melakukan pengecekan private atribut menggunakan pointer
+class PointCheck {
+	format : source {
+		function block : "{" "}"
+		single comment : "//"
+		multi comment : "/*" "*/"
+	}
+	
+	P 1 {exist regex "(.*)private:(.*)int(//s*)*(.*)"}
+	P 2 {forbid regex "(.*)private:(.*)int(//s+)x(.*)"}
+	P 3 {forbid regex "(.*)private:(.*)int(//s+)y(.*)"}
+	P 4	{forbid regex "(.*)private:(.*)int(//s*)[(.*)](.*)"}
+	
+	check : source {
+		P [1,2,3,4] check all ["Pont.h"] score 100
+	}
+}

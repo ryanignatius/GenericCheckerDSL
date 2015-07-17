@@ -1,0 +1,21 @@
+class Example2 {
+	int n
+	int x
+	int y
+	
+	format : input { 1(n) }
+	format : output { 1(x,y) }
+	
+	P 1 { x+y == n } // predicate for checking the sum
+	P 2 { 1 < x } // predicate for checking the value of x
+	P 3 { x <= n } // predicate for checking the value of x
+	P 4 { not prime(x) } // predicate for checking the value of x
+	P 5 { 1 < y } // predicate for checking the value of y
+	P 6 { y <= n } // predicate for checking the value of y
+	P 7 { not prime(y) } // predicate for checking the value of y
+	P 8 { 12 <= n } // predicate for checking the value of n
+	P 9 { n <= 1000000 } // predicate for checking the value of n
+	
+	check : output {P [1,2,3,4,5,6,7] check each [".out"] score 100}
+	check : input {P [8,9] check each [".in"] score 100}
+}

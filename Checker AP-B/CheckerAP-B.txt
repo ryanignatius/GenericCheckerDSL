@@ -1,0 +1,64 @@
+Algoritma dan Pemrograman
+Praktikum-01, Senin 8 juni 2015
+Soal 1, hitung IP
+Program harus dilengkapi dengan fungsi IsWithinRange yang digunakan untuk memeriksa apakah suatu nilai berada dalam suatu range tertentu. Fungsi ini dimanfaatkan untuk memeriksa apakah nilai IP berada pada range yang benar, dan untuk menentukan apakah IP berada dalam batas lulus atau tidak.
+
+int IsWithinRange (float X, float min, float max);
+
+/* Menghasilkan 1 jika min <= X <= max, menghasilkan 0 jika tidak */
+
+
+Soal-2
+Buatlah sebuah program dalam Bahasa C atau Java yang digunakan untuk membaca sebuah integer positif N (diasumsikan nilai N selalu benar). Program kemudian membaca pilihan karakter, misalnya pil, yaitu ‘A’ atau ‘B’ (diasumsikan nilai pil selalu benar). ‘A’ artinya program akan mencari nilai minimum dan ‘B’ artinya program akan mencari nilai maksimum. Selanjutnya, program membaca N bilangan integer. Jika pil = ‘A’ maka selanjutnya program akan menampilkan nilai minimum dari kumpulan integer tadi dan berapa banyak kemunculan nilai minimum tersebut. Jika pil = ‘B’ maka program akan menampilkan nilai maksimum dan berapa banyak kemunculannya.
+
+Catatan: Tidak boleh diimplementasikan dengan menggunakan array.
+
+
+
+Praktikum02, Rabu 10 JUni 2015
+Buatlah sebuah program C atau Java yang digunakan untuk membaca sebuah integer positif N dan mendeklarasikan sebuah array berukuran N. Pembacaan nilai N diasumsikan benar (tidak perlu divalidasi), yaitu N > 0.
+Program kemudian membaca N buah integer dan menyimpan setiap integer ke dalam array dari indeks paling awal. Selanjutnya, program menerima masukan sebuah nilai integer, misalnya X dan menampilkan beberapa hal sebagai berikut secara berturut-turut:
+- Berapa banyak kemunculan X dalam array.
+- Di indeks ke-berapa saja X muncul. Setiap indeks dipisahkan dengan koma (kecuali indeks terakhir). Jika X tidak ada di array, dituliskan “X tidak ada”.
+- Apakah X adalah nilai maksimum atau nilai minimum atau keduanya, jika X ada di array. Jika bukan nilai maksimum atau minimum, tidak menuliskan apa pun.
+
+==> cek deklarasi array
+cek alokasi array
+
+
+Soal-2 : harus dicek bahwa at least ada deklarasi satu fungsi atau satu prosedur
+
+Buatlah program dalam Bahasa C atau Java yang digunakan untuk membaca sebuah bilangan integer N>0 (asumsikan masukan N selalu benar). Selanjutnya, program menerima N buah karakter dari pengguna. Kemudian:
+
+1. Program membaca sebuah karakter, misalnya CC, dan menuliskan ke layar berapa banyak kemunculan CC dan tuliskan pada urutan ke-berapa saja CC dimasukkan (deret urutan dipisahkan koma, kecuali elemen terakhir). Kemunculan pertama dimulai dari angka 1 (hati-hati, bedakan dengan indeks array). Jika CC tidak ada, maka urutan tidak perlu ditulis.
+
+2. Pilihan angka 1, 2, 3, atau 4 (asumsikan pilihan pengguna benar yaitu 1 s.d. 4). Jika:
+
+o pilihan = 1, maka tuliskan berapa banyak huruf hidup (vokal)
+
+o pilihan = 2, maka tuliskan berapa banyak huruf mati (konsonan)
+
+o pilihan = 3, maka tuliskan berapa banyak karakter angka (‘0’ s.d. ‘9’)
+
+o pilihan = 4, maka tuliskan berapa banyak karakter lain
+
+Program harus dilengkapi dengan fungsi/prosedur (bebas) yang digunakan untuk memeriksa apakah suatu karakter termasuk huruf hidup, huruf mati, karakter angka, atau karakter lain.
+
+Perhatikan contoh di bawah: yang digaris bawah dan dicetak tebal adalah input dari pengguna.
+
+
+Senin 22 juni
+Diberikan file tanggal.h yang berisi definisi dan primitif untuk type TANGGAL yang merepresentasikan tanggal dalam penanggalan Masehi. Berikut adalah definisi tanggal.h dalam notasi algoritmik.  
+Tugas Anda adalah membuat implementasi file tanggal.c berdasarkan file tanggal.h (dilarang mengubah-ubah nama file/type/function/prosedur!!).
+Untuk mengetes program, buatlah driver Anda sendiri yang dites di compiler lokal.
+===> cek prototype
+cek assert untuk batas nilai DD, MM, YY
+cet assert MakeTanggal : Prekondisi : h, b, t dapat membentuk TANGGAL yang valid. }
+
+
+Rabu 24 JUni
+Diberikan file pecahan.h yang berisi definisi dan primitif untuk type Pecahan yang merepresentasikan pecahan biasa. Pembilang pecahan no adalah integer, sedangkan penyebut pecahan (d) adalah integer > 0.
+
+Tugas Anda adalah membuat implementasi file pecahan.c berdasarkan file pecahan.h (dilarang mengubah-ubah nama file/type/function/prosedur!!).
+
+

@@ -1,0 +1,28 @@
+// input :
+// satu baris berisi sebuah integer T yang menyatakan suhu air
+//
+// output :
+// satu baris berisi sebuah string yang menyatakan wujud air
+// "Beku" jika T <= 0, "Cair" jika 0 < T <= 100, atau "Uap" jika T > 100
+class WujudAir {
+	int T
+	string wujud
+	
+	format : input { 1(T) }
+	format : output { 1(wujud) }
+	
+	P 1 { T <= 0 }
+	P 2 { 0 < T }
+	P 3 { T <= 100 }
+	P 4 { T > 100 }
+	P 5 { T == 0 }
+	P 6 { T == 100 }
+	
+	check : input {
+		P [1] check all [".in"] score 20;
+		P [2,3] check all [".in"] score 20;
+		P [4] check all [".in"] score 20;
+		P [5] check all [".in"] score 20;
+		P [6] check all [".in"] score 20
+	}
+}

@@ -1,0 +1,17 @@
+// input : satu baris integer n
+// output : satu baris berisi dua buah integer positif x dan y dipisahkan spasi, dengan x + y = n
+
+class Example {
+	int n
+	int x
+	int y
+	
+	format : input { 1(n) }
+	format : output { 1(x,y) }
+	
+	P 1 { x+y == n } // predicate for checking the sum
+	P 2 { x > 0 } // predicate for checking the value of x
+	P 3 { y > 0 } // predicate for checking the value of y
+	
+	check : output {P [1,2,3] check each [".out"] score 100}
+}

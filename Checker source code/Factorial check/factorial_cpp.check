@@ -1,0 +1,13 @@
+// melakukan pengecekan fungsi factorial dalam bahasa C++
+// header fungsi : int fac(int n)
+class FactorialCheck {
+	format : source {
+		function block : "{" "}"
+		single comment : "//"
+		multi comment : "/*" "*/"
+	}
+	
+	P 1 {exist regex "(.*)int(\\s+)fac(\\s*)\\((\\s*)int(\\s*)n\\)(.*)fac(\\s*)\\((.*)n(.*)\\)(.*)"}
+	
+	check : source {P [1] check all [".cpp"] score 100}
+}

@@ -1,0 +1,29 @@
+// input :
+// baris pertama berisi sebuah integer n yang menyatakan banyak bilangan
+// baris kedua berisi n buah bilangan integer dipisahkan spasi
+//
+// output :
+// satu baris berisi sebuah bilangan real yang menyatakan nilai
+//     rata-rata dari n buah bilangan integer pada input
+// output akan dianggap benar apabila perbedaan nilai selisih absolut 
+//     dengan jawaban kurang dari 0.000001
+class HitungRataRata {
+	int n
+	int[n] arr
+	double ratarata
+	
+	// temp variable
+	int s = sum(arr)
+	double rata1 = s/n
+	double delta = rata1-ratarata
+	
+	format : input {
+		1(n)
+		1(arr<n>)
+	}
+	format : output { 1(ratarata) }
+	
+	P 1 { abs(delta) < 0.000001 }
+	
+	check : output {P [1] check each [".out"] score 100}
+}

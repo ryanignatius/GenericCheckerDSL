@@ -1,0 +1,26 @@
+// Soal 2, mencari nilai max-min, bahasa C
+// Buatlah sebuah program dalam Bahasa C yang digunakan untuk membaca
+//     sebuah integer positif N (diasumsikan nilai N selalu benar).
+// Program kemudian membaca pilihan karakter, misalnya pil, yaitu 'A' atau 'B'.
+//     (diasumsikan nilai pil selalu benar).
+// 'A' artinya program akan mencari nilai minimum dan 'B' artinya program
+//     akan mencari nilai maksimum.
+// Selanjutnya, program membaca N bilangan integer.
+// Jika pil = 'A' maka selanjutnya program akan menampilkan nilai minimum
+//     dari kumpulan integer tadi dan berapa banyak kemunculan nilai minimum
+//     tersebut. Jika pil = 'B' maka program akan menampilkan nilai maksimum
+//     dan berapa banyak kemunculannya.
+//
+// Catatan: Tidak boleh diimplementasikan dengan menggunakan array.
+class CariMaxMin {
+	format : source {
+		function block : "{" "}"
+		single comment : "//"
+		multi comment : "/*" "*/"
+	}
+	
+	P 1 {forbid regex "(.*)int(\\s*)[(.*)](.*)"}
+	P 2 {forbid regex "(.*)int(\\s*)*(.*)"}
+	
+	check : source {P [1,2] check all [".c"] score 100}
+}

@@ -1,0 +1,20 @@
+// Soal 1, hitung IP, bahasa C
+// Program harus dilengkapi dengan fungsi IsWithinRange yang digunakan
+//    untuk memeriksa apakah suatu nilai berada dalam suatu range tertentu.
+// Fungsi ini dimanfaatkan untuk memeriksa apakah nilai IP berada pada range yang benar,
+//    dan untuk menentukan apakah IP berada dalam batas lulus atau tidak.
+//
+// header dari fungsi :
+// int IsWithinRange (float X, float min, float max);
+/* Menghasilkan 1 jika min <= X <= max, menghasilkan 0 jika tidak */
+class HitungIPCheck {
+	format : source {
+		function block : "{" "}"
+		single comment : "//"
+		multi comment : "/*" "*/"
+	}
+	
+	P 1 {exist regex "(.*)int(\\s+)IsWithinRange(\\s*)\\((\\s*)float(\\s+)X(\\s*),(\\s*)float(\\s+)min(\\s*),(\\s*)float(\\s+)max(\\s*)\\)(.*)"}
+	
+	check : source {P [1] check all [".c"] score 100}
+}
