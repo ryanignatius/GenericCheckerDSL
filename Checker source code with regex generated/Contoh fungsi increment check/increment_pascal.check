@@ -1,0 +1,19 @@
+// contoh soal, melakukan pengecekan fungsi increment dalam bahasa Pascal
+// parameter : x
+// return : x+1
+// header fungsi : function incr(x:integer):integer
+// batasan tambahan : tidak boleh menggunakan variabel temporary
+class IncrementCheck {
+	format : source {
+		function block : "begin" "end"
+		single comment : "//"
+		multi comment : "(*" "*)" or "{" "}"
+	}
+	
+	P 1 {exist regex "(.*)function(\\s+)incr(\\s*)\\((\\s*)x(\\s+):(\\s+)integer(\\s*)\\)(\\s*):(\\s*)integer(.*)"}
+	P 2 {forbid regex "(.*)function(\\s+)incr(\\s*)\\((\\s*)x(\\s+):(\\s+)integer(\\s*)\\)(\\s*):(\\s*)integer(.*)var(.*)"}
+	
+	check : source {
+		P [1,2] check all [".pas"] score 100
+	}
+}

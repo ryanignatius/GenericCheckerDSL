@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Checker {
+class MainChecker {
 	// argument 1 (args[0]), source code file
 	// argument 2 (args[1]), executable file
 
@@ -29,50 +29,44 @@ class Checker {
 		long scoreChange = 0;
 		String templ = "[[CHECKER]]";
 		
-		FileWriter tempOutput = new FileWriter("bufferIn.temp");
+		File inTempFile = new File("temp/1.in");
+		inTempFile.getParentFile().mkdirs();
+		inTempFile.createNewFile();
+		File outTempFile = new File("temp/1.out");
+		outTempFile.createNewFile();
+		
+		FileWriter tempOutput = new FileWriter(inTempFile);
 		Scanner sc = new Scanner(System.in);
 		String line;
-		int n = -1;
 		while (sc.hasNextLine()){
 			line = sc.nextLine();
-			if (n == -1) n = Integer.parseInt(line);
 			tempOutput.write(line);
 			tempOutput.write("\n");
 		}
 		tempOutput.close();
 		
 		
-		FileInputStream fileIn = new FileInputStream("bufferIn.temp");
-		FileOutputStream fileOut = new FileOutputStream("bufferOut.temp");
+		FileInputStream fileIn = new FileInputStream(inTempFile);
+		FileOutputStream fileOut = new FileOutputStream(outTempFile);
 		
 		OutputStream procIn = null;
 		InputStream procOut = null;
+		
+		Process process = null;
 
 		try {
-			Process process = Runtime.getRuntime().exec (args[1]);
+			process = Runtime.getRuntime().exec (args[1]);
 			procIn = process.getOutputStream();
 			procOut = process.getInputStream();
 
 			pipeStream(fileIn, procIn);
 			pipeStream(procOut, fileOut);
 		} catch (IOException e) {}
+		process.destroy();
 		
-		InputStream fisOut = new FileInputStream("bufferOut.temp");
-		BufferedReader brOut = new BufferedReader(new InputStreamReader(fisOut));
-		String s = "";
-		String[] tok;
-		boolean ok = true;
-		int x = -1,y = -1;
-		try {
-			while((line = brOut.readLine()) != null) {
-				tok = line.split(" ");
-				x = Integer.parseInt(tok[0]);
-				y = Integer.parseInt(tok[1]);
-				break;
-			}
-			if (x <= 0 || y <= 0 || x+y != n) ok = false;
-			if (ok) System.out.println("OK");
-			else System.out.println("Wrong Answer");
-		} catch (Exception e){System.out.println("Wrong Answer");}
+		ExampleOutputChecker ex = new ExampleOutputChecker();
+		int score = ex.check("temp/");
+		if (score == 100) System.out.println("OK");
+		else System.out.println("Wrong Answer");
 	}
 }

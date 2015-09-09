@@ -23,7 +23,7 @@ class HitungRataRata {
 	}
 	format : output { 1(ratarata) }
 	
-	P 1 { abs(delta) < 0.000001 }
+	P 1 { abs(delta) < 0.001 }
 	
 	check : output {P [1] check each [".out"] score 100}
 }

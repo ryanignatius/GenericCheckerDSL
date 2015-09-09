@@ -1,0 +1,11 @@
+tc1 : fungsi factorial sesuai
+nilai : 100
+
+tc2 : fungsi factorial sesuai, namun nama fungsi berbeda
+nilai : 0
+
+tc3 : menghitung secara iteratif dalam main program
+nilai : 0
+
+tc4 : memanggil fungsi dengan nama sesuai, namun fungsi tidak rekursif
+nilai : 0

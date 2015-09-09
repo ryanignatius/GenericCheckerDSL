@@ -1,0 +1,8 @@
+tc1 : print hello dengan menginvokasi ctor
+nilai : 100
+
+tc2 : print hello world langsung di main program
+nilai : 60
+
+tc3 : print hello world dengan fungsi lain, bukan di ctor
+nilai : 60

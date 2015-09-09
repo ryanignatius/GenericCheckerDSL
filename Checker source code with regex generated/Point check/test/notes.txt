@@ -1,0 +1,15 @@
+tc1 : int x, int y
+nilai Main : 100
+nilai Main2 : 0
+
+tc2 : int *P
+nilai Main : 0
+nilai Main2 : 100
+
+tc3 : int P[2]
+nilai Main : 0
+nilai Main2 : 0
+
+tc4 : double x, double y
+nilai Main : 0
+nilai Main2 : 0

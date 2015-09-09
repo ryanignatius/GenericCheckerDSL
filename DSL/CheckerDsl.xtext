@@ -9,12 +9,7 @@ ClassDeclaration:
 	'class' name=ValidID '{' features+=Feature* '}';
 
 Feature:
-	CompileAndRun | ChkVariableDeclaration | Format | MR | Predicate | Checker;
-
-CompileAndRun:
-	'language' ':' lang=CHK_LANGUAGE_REFERENCE
-	'source' 'location' ':' sourceLocation=STRING
-	'input' 'location' ':' inputLocation=STRING;
+	ChkVariableDeclaration | Format | MR | Property | Checker;
 
 ChkVariableDeclaration:
 	type=CHK_TYPE_REFERENCE (arr+='[' (sz+=CHK_NUMBER)? ']')* name=ValidID
@@ -28,20 +23,20 @@ MR:
   	((mrExp+=(ChkBoolExpression | ChkStatement | ChkLoopStatement))
   		(';' mrExp+=(ChkBoolExpression | ChkStatement | ChkLoopStatement))*)?
   	followup=FollowUp
-  	property=Property
+  	mrcheck=MRCheck
   	'}';
 
-Predicate:
+Property:
 	p='P' num=INT '{'
-	((predicateExp+=(ChkBoolExpression | ChkBoolFunction | ChkLoopBoolExpression))
+	((propertyExp+=(ChkBoolExpression | ChkBoolFunction | ChkLoopBoolExpression))
 		(';' predicateExp+=(ChkBoolExpression | ChkBoolFunction | ChkLoopBoolExpression))*)?
 	'}';
 
 Checker:
-	'check' ':' type=CHK_FILE_TYPE '{' (predicate+=PredicateUsage(';' predicate+=PredicateUsage)*)? '}';
+	'check' ':' type=CHK_FILE_TYPE '{' (property+=PropertyUsage(';' property+=PropertyUsage)*)? '}';
 
-PredicateUsage:
-	p='P' '[' predicateNumber+=INT (',' predicateNumber+=INT)* ']'
+PropertyUsage:
+	p='P' '[' propertyNumber+=INT (',' propertyNumber+=INT)* ']'
 	'check' checkScope=CHK_CHECK_SCOPE
 	'[' fileType+=STRING (',' fileType+=STRING)* ']'
 	'score'
@@ -61,7 +56,7 @@ FollowUp:
 			(';' followups+=(ChkStatement | ChkLoopStatement))*)?
 	'}';
 
-Property:
+MRCheck:
 	prop='check' '{'
 		((properties+=(ChkBoolExpression | ChkLoopBoolExpression))
 			(';' properties+=(ChkBoolExpression | ChkLoopBoolExpression))*)?

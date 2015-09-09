@@ -27,12 +27,14 @@ class ArrayCheck {
 	}
 	P 2 {
 		for (i,1,n){
-			arr[i-1] <= arr[i]
+			def int i1 = i-1;
+			arr[i1] < arr[i]
 		}
 	}
 	P 3 {
 		for (i,1,n){
-			arr[i-1] >= arr[i]
+			def int i1 = i-1;
+			arr[i1] > arr[i]
 		}
 	}
 	P 4 {

@@ -9,9 +9,15 @@ class Example {
 	format : input { 1(n) }
 	format : output { 1(x,y) }
 	
-	P 1 { x+y == n } // predicate for checking the sum
+	P 1 { 
+		def int z = x+y;
+		z == n
+	} // predicate for checking the sum
 	P 2 { x > 0 } // predicate for checking the value of x
 	P 3 { y > 0 } // predicate for checking the value of y
+	P 4 { n > 1 }
+	P 5 { n < 1000000 }
 	
+	check : input {P[1,2] check each [".in"] score 100}
 	check : output {P [1,2,3] check each [".out"] score 100}
 }

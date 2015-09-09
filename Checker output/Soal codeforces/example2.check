@@ -6,7 +6,10 @@ class Example2 {
 	format : input { 1(n) }
 	format : output { 1(x,y) }
 	
-	P 1 { x+y == n } // predicate for checking the sum
+	P 1 { 
+		def int z = x+y;
+		z == n
+	} // predicate for checking the sum
 	P 2 { 1 < x } // predicate for checking the value of x
 	P 3 { x <= n } // predicate for checking the value of x
 	P 4 { not prime(x) } // predicate for checking the value of x

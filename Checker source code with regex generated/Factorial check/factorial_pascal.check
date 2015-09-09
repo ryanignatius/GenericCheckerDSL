@@ -1,0 +1,13 @@
+// melakukan pengecekan fungsi factorial dalam bahasa Pascal
+// header fungsi : function fac(n:integer):integer
+class FactorialCheckPascal {
+	format : source {
+		function block : "begin" "end"
+		single comment : "//"
+		multi comment : "{" "}" or "(*" "*)"
+	}
+	
+	P 1 {exist regex "(?s)function fac(n:integer):integer..fac(..n..)"}
+	
+	check : source {P [1] check all [".pas"] score 100}
+}

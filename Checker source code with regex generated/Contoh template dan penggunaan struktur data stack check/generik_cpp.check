@@ -1,0 +1,12 @@
+// melakukan pengecekan fungsi generik <template> dalam bahasa C++
+class GenerikCheck {
+	format : source {
+		function block : "{" "}"
+		single comment : "//"
+		multi comment : "/*" "*/"
+	}
+	
+	P 1 {exist regex "(.*)template(\\s*)<(\\s*)class(\\s+)T(\\s*)>(.*)"}
+	
+	check : source {P [1] check all [".cpp"] score 100}
+}

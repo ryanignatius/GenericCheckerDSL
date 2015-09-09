@@ -1,0 +1,19 @@
+// Soal nomor 1
+// Nama file : Point.h, Point.cpp, Main.cpp
+// melakukan pengecekan private atribut x dan y
+class PointCheck {
+	format : source {
+		function block : "{" "}"
+		single comment : "//"
+		multi comment : "/*" "*/"
+	}
+	
+	P 1 {exist regex "int x"}
+	P 2 {exist regex "int y"}
+	P 3 {forbid regex "int..*"}
+	P 4 {forbid regex "int..[..]"}
+	
+	check : source {
+		P [1,2,3,4] check all ["Point.h"] score 100
+	}
+}

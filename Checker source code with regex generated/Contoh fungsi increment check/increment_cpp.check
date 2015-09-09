@@ -1,0 +1,19 @@
+// contoh soal, melakukan pengecekan fungsi increment dalam bahasa C++
+// parameter : x
+// return : x+1
+// header fungsi : int incr(int x)
+// batasan tambahan : tidak boleh menggunakan variabel temporary
+class IncrementCheck {
+	format : source {
+		function block : "{" "}"
+		single comment : "//"
+		multi comment : "/*" "*/"
+	}
+	
+	P 1 {exist regex "(.*)int(\\s+)incr(\\s*)\\((\\s*)int(\\s+)x(\\s*)\\)(.*)"}
+	P 2 {forbid regex "(.*)int(\\s+)incr(\\s*)\\((\\s*)int(\\s+)x(\\s*)\\)(.*)=(.*)"}
+	
+	check : source {
+		P [1,2] check all [".cpp"] score 100
+	}
+}

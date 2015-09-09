@@ -1,0 +1,5 @@
+tc1 : coverage lengkap
+nilai : 100
+
+tc2 : coverage tidak lengkap (tidak ada T < 0 dan 0 < T < 100)
+nilai : 60

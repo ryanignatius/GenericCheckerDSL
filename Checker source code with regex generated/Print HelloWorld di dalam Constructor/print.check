@@ -1,0 +1,32 @@
+// contoh soal, melakukan penulisan HelloWorld dalam konstruktor dalam bahasa C++
+// nama file : Proses.h, Proses.cpp, Main.cpp
+// header konstruktor : Proses()
+// batasan tambahan : tidak boleh melakukan penulisan di dalam main program
+class PrintCheck {
+	format : source {
+		function block : "{" "}"
+		single comment : "//"
+		multi comment : "/*" "*/"
+	}
+	
+	// P1 : deklarasi class Proses dalam Proses.h
+	P 1 {exist regex "class Proses"}
+	// P2 : deklarasi konstruktor tanpa parameter Proses dalam Proses.h
+	P 2 {exist regex "Proses()"}
+	// P3 dan P4 : deklarasi implementasi konstruktor Proses dalam Proses.cpp
+	P 3 {
+		exist regex "(?s)Proses::Proses()..printf"; 
+		exist regex "(?s)Proses::Proses()..cout"
+	}
+	// P4 : ada statement printf atau cout dalam Main.cpp
+	P 4 {
+		exist "printf";
+		exist "cout"
+	}
+	
+	check : source {
+		P [1,2] check all ["Proses.h"] score 20;
+		P [3] check all ["Proses.cpp"] score 40;
+		P [4] check all ["Main.cpp"] score 40
+	}
+}

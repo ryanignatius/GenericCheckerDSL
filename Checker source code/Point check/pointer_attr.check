@@ -14,6 +14,6 @@ class PointCheck {
 	P 4	{forbid regex "(.*)private:(.*)int(//s*)[(.*)](.*)"}
 	
 	check : source {
-		P [1,2,3,4] check all ["Pont.h"] score 100
+		P [1,2,3,4] check all ["Point.h"] score 100
 	}
 }

@@ -1,0 +1,20 @@
+tc1 : coverage lengkap
+nilai : 100
+
+tc2 : coverage tidak lengkap (tidak ada array terurut menaik, array terurut menurun, dan array dengan semua elemen yang sama)
+nilai : 40
+
+tc3 : hanya array terurut menaik
+nilai : 20
+
+tc4 : hanya array terurut menurun
+nilai : 20
+
+tc5 : hanya array dengan semua elemen yang sama
+nilai : 20
+
+tc6 : hanya array yang semua elemennya positif
+nilai : 20
+
+tc6 : hanya array yang semua elemennya negatif
+nilai : 20

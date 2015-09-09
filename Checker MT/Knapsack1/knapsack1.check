@@ -7,27 +7,20 @@ class Knapsack{
 	 */
 	
 	// variable untuk input
-	int n (subtask 1 : 1..100) // n adalah variabel jumlah item
-	int m (subtask 1 : 1..100) // m adalah jumlah knapsack
-	int[n] p (subtask 1 : 1..100) // p adalah profit dari n buah item
-	int[n] w (subtask 1 : 1..100) // w adalah weight dari n buah item
-	int[m] c (subtask 1 : 1..100) // c adalah capacity dari m buah knapsack
+	int n // n adalah variabel jumlah item
+	int m // m adalah jumlah knapsack
+	int[n] p // p adalah profit dari n buah item
+	int[n] w // w adalah weight dari n buah item
+	int[m] c // c adalah capacity dari m buah knapsack
 	
 	// variable untuk output
-	int[n] y (0..m) // y adalah nomor tempat knapsack item i atau 0 jika tidak dipilih
+	int[n] y // y adalah nomor tempat knapsack item i atau 0 jika tidak dipilih
 	int tp // tp adalah variable total profit
-	
-	/*
-	 * score for each subtasks
-	 */
-	score {
-		(1 : 100)
-	}
 	
 	/*
 	 * input format
 	 */
-	input {
+	format : input {
 		1 (n,m) // 1 baris pertama berisi 2 buah integer n dan m
 		1 (p<n>) // 1 baris berikutnya berisi n buah integer p
 		1 (w<n>) // 1 baris berikutnya berisi n buah integer w
@@ -37,48 +30,51 @@ class Knapsack{
 	/*
 	 * output format
 	 */
-	output {
+	format : output {
 		1 (y<n>) // 1 baris berikutnya berisi n buah integer y
 		1 (tp) // 1 baris berikutnya berisi 1 buah integer tp
 	}
 	
-	/*
-	 * checker logic
-	 */
-	check {
+	P 1 {
 		// ans contains problem setter answer
 		// out contains contestant output
 		// in contains input test case
-		(ans.tp == out.tp)
-		(sum(in.p) where out.y[i]>0 == out.tp)
-		for (j,m) {
-			(sum(in.w) where out.y[i]==j <= in.c[j])
+		//ans.tp == out.tp
+		def int s1 = sum(p) where y[i]>0;
+		s1 == tp;
+		for (j,0,m) {
+			def int sw = sum(w) where y[i]==j; 
+			sw <= in.c[j]
 		}
 	}
 	
 	MR 1 {
-		(select(k,l) where 1<=k and k<l and l<=n and p[k]!=p[l] or w[k]!=w[l])
+		def int n1 = n-1;
+		select(k,l:0..n1) where p[k]!=p[l] or w[k]!=w[l]
 		followup {
-			(p` = swap(p,k,l))
-			(w` = swap(w,k,l))
+			p` = swap(p,k,l);
+			w` = swap(w,k,l);
+			y` = swap(y,k,l)
 		}
 		check {
-			(y` = swap(y,k,l))
+			tp` == tp
 		}
 		
 	}
 	
 	MR 2 {
-		(select(k) where y[k]==1)
-		def cc = (random(0..100))
+		def int n1 = n-1;
+		select(k:0..n1) where y[k]==1;
+		def int cc = random(0..100);
+		def int nt = tp+cc
 		followup {
-			(p`[k] = p[k]+cc)
+			p`[k] = p[k]+cc
 		}
 		check {
-			(tp` = tp+cc)
+			tp` == nt
 		}
 	}
-	
+	/*
 	MR 3 {
 		(select(k) where y[k]==0)
 		def cc = (random(0..100))
@@ -178,4 +174,5 @@ class Knapsack{
 			(tp` = tp-v)
 		}
 	}
+	*/
 }
